@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Browse and book hotels for your perfect stay.">
+    <title>Hotels - Hotel Booking System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .filters, .hotel-list {
+            margin-bottom: 30px;
+        }
+        .hotel-card {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+            display: flex;
+            align-items: center;
+        }
+        .hotel-image {
+            width: 150px;
+            height: 100px;
+            margin-right: 20px;
+        }
+        .hotel-info {
+            flex-grow: 1;
+        }
+        .hotel-info h3 {
+            margin: 0 0 10px;
+            color: #3498db;
+        }
+        .hotel-info p {
+            margin: 5px 0;
+        }
+        .hotel-info button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        .hotel-info button:hover {
+            background-color: #2980b9;
+        }
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Hotels</h1>
+
+        <div class="filters">
+            <label for="price">Price Range:</label>
+            <select id="price">
+                <option value="any">Any</option>
+                <option value="50-100">$50 - $100</option>
+                <option value="101-200">$101 - $200</option>
+                <option value="201-300">$201 - $300</option>
+            </select>
+
+            <label for="stars">Star Rating:</label>
+            <select id="stars">
+                <option value="any">Any</option>
+                <option value="3">3 Stars</option>
+                <option value="4">4 Stars</option>
+                <option value="5">5 Stars</option>
+            </select>
+
+            <button onclick="applyFilters()">Apply Filters</button>
+        </div>
+
+        <div class="hotel-list" id="hotel-list">
+            <!-- Hotels will be dynamically injected here -->
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Hotel Booking System. All Rights Reserved.</p>
+        <h3>Follow Us</h3>
+        <p>Stay connected through our social media channels:</p>
+        <p>
+            <img src="https://www.freeiconspng.com/uploads/facebook-logo-3.png" alt="Your Logo" style="width:18px; height:18px;">
+        Facebook |
+           <img src="https://logohistory.net/wp-content/uploads/2023/02/Twitter-Log%D0%BE.svg" alt=" Twitter logo"  style="width=18px"; height="18px">
+        Twitter |
+           <img src="https://tse4.mm.bing.net/th?id=OIP.4yOhxJCs2K0_hNHRpteMmgHaHZ&pid=Api&P=0&h=180" alt="Instagram" style="width: 18px"; height:"18px">
+        Instagram</p>
+    </footer>
+
+    <script>
+        // Mock hotel data (in real case, fetch this data from an API)
+        const hotels = [
+            {
+                id: 1,
+                name: "Grand Palace Hotel",
+                price: 200,
+                stars: 5,
+                rating: 4.8,
+                location: "New York City, USA",
+                amenities: ["Free WiFi", "Pool", "Gym"],
+                imageUrl: "https://via.placeholder.com/150",
+            },
+            {
+                id: 2,
+                name: "Ocean View Resort",
+                price: 150,
+                stars: 4,
+                rating: 4.5,
+                location: "Miami Beach, USA",
+                amenities: ["Free Parking", "Pool", "Spa"],
+                imageUrl: "https://via.placeholder.com/150",
+            },
+            {
+                id: 3,
+                name: "Mountain Lodge Retreat",
+                price: 120,
+                stars: 3,
+                rating: 4.2,
+                location: "Denver, USA",
+                amenities: ["Free Breakfast", "Pet-Friendly"],
+                imageUrl: "https://via.placeholder.com/150",
+            }
+        ];
+
+        // Function to display hotels dynamically
+        function displayHotels(hotelList) {
+            const hotelContainer = document.getElementById("hotel-list");
+            hotelContainer.innerHTML = "";
+
+            hotelList.forEach(hotel => {
+                const hotelCard = document.createElement("div");
+                hotelCard.className = "hotel-card";
+                hotelCard.innerHTML = `
+                    <img src="${hotel.imageUrl}" alt="${hotel.name}" class="hotel-image">
+                    <div class="hotel-info">
+                        <h3>${hotel.name}</h3>
+                        <p><strong>Price:</strong> $${hotel.price}/night</p>
+                        <p><strong>Rating:</strong> ${hotel.rating} ⭐</p>
+                        <p><strong>Location:</strong> ${hotel.location}</p>
+                        <p><strong>Amenities:</strong> ${hotel.amenities.join(", ")}</p>
+                        <button onclick="viewDetails(${hotel.id})">View Details</button>
+                    </div>
+                `;
+                hotelContainer.appendChild(hotelCard);
+            });
+        }
+
+        // Function to filter hotels based on selected criteria
+        function applyFilters() {
+            const priceFilter = document.getElementById("price").value;
+            const starsFilter = document.getElementById("stars").value;
+
+            const filteredHotels = hotels.filter(hotel => {
+                const priceMatches = priceFilter === "any" || 
+                    (priceFilter === "50-100" && hotel.price >= 50 && hotel.price <= 100) ||
+                    (priceFilter === "101-200" && hotel.price >= 101 && hotel.price <= 200) ||
+                    (priceFilter === "201-300" && hotel.price >= 201 && hotel.price <= 300);
+
+                const starsMatches = starsFilter === "any" || hotel.stars == starsFilter;
+
+                return priceMatches && starsMatches;
+            });
+
+            displayHotels(filteredHotels);
+        }
+
+        // Function to handle view details action
+        function viewDetails(hotelId) {
+            alert(`Viewing details for hotel ID: ${hotelId}`);
+            // Redirect to details page or show a modal with more info
+        }
+
+        // Initialize the page by displaying all hotels
+        document.addEventListener("DOMContentLoaded", () => {
+            displayHotels(hotels);
+        });
+    </script>
+
+</body>
+</html>

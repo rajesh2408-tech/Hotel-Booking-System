@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Manage and view your hotel reservations on My Bookings page.">
+    <title>My Bookings - Hotel Booking System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #2c3e50;
+        }
+        .booking-card {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+        }
+        .booking-card h3 {
+            margin-top: 0;
+            color: #3498db;
+        }
+        .booking-card p {
+            margin: 5px 0;
+        }
+        .actions button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        .actions button:hover {
+            background-color: #c0392b;
+        }
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>My Bookings</h1>
+        <p>Welcome to your personalized bookings dashboard! Here, you can view, manage, and modify all your upcoming and past hotel reservations in one place.</p>
+
+        <h2>Upcoming Bookings</h2>
+        <div id="upcoming-bookings">
+            <!-- Bookings will be dynamically injected here -->
+        </div>
+
+        <h2>Past Bookings</h2>
+        <div id="past-bookings">
+            <!-- Past bookings will be dynamically injected here -->
+        </div>
+
+        <h2>Need Help with Your Bookings?</h2>
+        <p>Our 24/7 support team is here to assist you with any changes or questions regarding your reservations. Contact us at:</p>
+        <ul>
+            <li><strong>Email:</strong> <a href="mailto:rajeshch.2408@gmail.com">supportbooknest@gmail.com</a></li>
+            <li><strong>Phone:</strong>1800 4343 5353</li>
+        </ul>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Hotel Booking System. All Rights Reserved.</p><p>Stay connected through our social media channels:</p>
+        <p>
+            <img src="https://www.freeiconspng.com/uploads/facebook-logo-3.png" alt="Your Logo" style="width:18px; height:18px;">
+        Facebook |
+           <img src="https://logohistory.net/wp-content/uploads/2023/02/Twitter-Log%D0%BE.svg" alt=" Twitter logo"  style="width=18px"; height="18px">
+        Twitter |
+           <img src="https://tse4.mm.bing.net/th?id=OIP.4yOhxJCs2K0_hNHRpteMmgHaHZ&pid=Api&P=0&h=180" alt="Instagram" style="width: 18px"; height:"18px">
+        Instagram</p>
+    </footer>
+
+    <script>
+        // Mock API endpoint for fetching booking data
+        const API_ENDPOINT = 'https://example.com/api/bookings';
+
+        // Function to fetch bookings (you can replace this with real API calls)
+        async function fetchBookings() {
+            return [
+                {
+                    id: 1,
+                    hotelName: "Grand Palace Hotel",
+                    checkInDate: "2024-10-25",
+                    checkOutDate: "2024-10-28",
+                    roomType: "Deluxe Suite",
+                    price: 300,
+                    status: "Confirmed",
+                    isUpcoming: true
+                },
+                {
+                    id: 2,
+                    hotelName: "Ocean View Resort",
+                    checkInDate: "2024-08-15",
+                    checkOutDate: "2024-08-20",
+                    roomType: "Standard Room",
+                    price: 200,
+                    status: "Completed",
+                    isUpcoming: false
+                }
+            ];
+        }
+
+        // Function to render bookings on the page
+        function renderBookings(bookings) {
+            const upcomingContainer = document.getElementById('upcoming-bookings');
+            const pastContainer = document.getElementById('past-bookings');
+
+            // Clear containers before adding new bookings
+            upcomingContainer.innerHTML = '';
+            pastContainer.innerHTML = '';
+
+            bookings.forEach(booking => {
+                const bookingCard = document.createElement('div');
+                bookingCard.className = 'booking-card';
+                bookingCard.innerHTML = `
+                    <h3>Hotel Name: ${booking.hotelName}</h3>
+                    <p><strong>Check-in:</strong> ${booking.checkInDate}</p>
+                    <p><strong>Check-out:</strong> ${booking.checkOutDate}</p>
+                    <p><strong>Room Type:</strong> ${booking.roomType}</p>
+                    <p><strong>Total Price:</strong> $${booking.price}</p>
+                    <p><strong>Status:</strong> ${booking.status}</p>
+                    <div class="actions">
+                        <button onclick="cancelBooking(${booking.id})">Cancel</button>
+                    </div>
+                `;
+
+                if (booking.isUpcoming) {
+                    upcomingContainer.appendChild(bookingCard);
+                } else {
+                    pastContainer.appendChild(bookingCard);
+                }
+            });
+        }
+
+        // Function to cancel a booking (mock)
+        function cancelBooking(bookingId) {
+            alert(`Booking with ID ${bookingId} canceled.`);
+            // Make an API call here to cancel the booking (e.g., DELETE /api/bookings/:id)
+        }
+
+        // Initialize the page by fetching and rendering bookings
+        document.addEventListener('DOMContentLoaded', async () => {
+            const bookings = await fetchBookings();
+            renderBookings(bookings);
+        });
+    </script>
+
+</body>
+</html>

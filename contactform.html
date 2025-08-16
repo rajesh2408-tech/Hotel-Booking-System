@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Hotel Booking</title>
+    <style>
+        /* Basic styling for the page */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin:0;
+            padding: 0;
+        }
+        p{
+            font-size: 17px;
+        }
+
+        /* Styling the main container */
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Page header */
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        /* Styling the form elements */
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        input, textarea {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #43ad53;
+            color: #fff;
+            padding: 10px;
+            font-size: 15px;
+        }
+        
+
+        /* Contact info styling */
+        .contact-info {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .contact-info p {
+            font-size: 16px;
+            color: #333;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="contact-container">
+        <h1>Contact Us</h1>
+        <p>If you have any questions, feedback, or need assistance, please fill out the form below, and we'll get back to you as soon as possible.</p>
+        <form action="/submit-contact-form" method="POST">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="Your full name" required>
+
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="Your email address" required>
+
+            <label for="message">Your Message</label>
+            <textarea id="message" name="message" rows="6" placeholder="Tell us more about your inquiry or feedback. Please provide as much detail as possible so we can assist you effectively....." required></textarea>
+
+            <button onclick="window.location.href='sendmessage.html';">Send Message</button>
+        </form>
+
+        <div class="contact-info">
+            <p>Phone:1800 4040 5151 and 1800 4040 5152</p>
+            <p>Contact:<a href="mailto:rajeshch.2408@gmail.com">info@gmail.com</a></p>
+            <p>Address:Hotel Tirupati Plaza
+                123 Tirumala Road,
+                Tirupati, Andhra Pradesh, 517501,
+                India</p>
+        </div>
+    </div>
+
+</body>
+</html>
